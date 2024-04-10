@@ -10,6 +10,11 @@
         <property name="khoa" column="Khoa" type="string"/>
 
         <property name="nganh" column="Nganh" type="string"/>
-        <property name="sdt" column="SDT" type="int"/>
+        
+        <property name="sdt" column="SDT" type="string"/>
+        
+        <property name="password" column="PassWord" type="string"/>
+        
+        <property name="email" column="Email" type="string"/>
     </class>
 </hibernate-mapping>

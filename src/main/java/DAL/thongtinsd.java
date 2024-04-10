@@ -5,6 +5,7 @@
 package DAL;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -34,23 +37,33 @@ public class thongtinsd implements Serializable {
     @JoinColumn(name = "maTB")
     private int maTB;
     @Column(name = "TGVao")
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date tgVao;
     @Column(name = "TGMuon")
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date tgMuon;
     @Column(name = "TGTra")
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date tgTra;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column (name = "TGDatCho")
+    private Date tgDatCho;
+    
 
     public thongtinsd() {
     }
 
-    public thongtinsd(int maTT, int maTV, int maTB, Date tgVao, Date tgMuon, Date tgTra) {
+    public thongtinsd(int maTT, int maTV, int maTB, Date tgVao, Date tgMuon, Date tgTra, Date tgDatCho) {
         this.maTT = maTT;
         this.maTV = maTV;
         this.maTB = maTB;
         this.tgVao = tgVao;
         this.tgMuon = tgMuon;
         this.tgTra = tgTra;
+        this.tgDatCho = tgDatCho;
     }
+
+    
 
     public int getMaTT() {
         return maTT;
@@ -99,7 +112,13 @@ public class thongtinsd implements Serializable {
     public void setTgTra(Date tgTra) {
         this.tgTra = tgTra;
     }
-    
-    
+
+    public Date getTgDatCho() {
+        return tgDatCho;
+    }
+
+    public void setTgDatCho(Date tgDatCho) {
+        this.tgDatCho = tgDatCho;
+    }
 
 }

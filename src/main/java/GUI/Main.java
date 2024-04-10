@@ -26,7 +26,7 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        TabbedTotal = new javax.swing.JTabbedPane();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -36,8 +36,13 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane2.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        jTabbedPane2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        TabbedTotal.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        TabbedTotal.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        TabbedTotal.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                TabbedTotalStateChanged(evt);
+            }
+        });
 
         jTabbedPane3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
 
@@ -67,7 +72,7 @@ public class Main extends javax.swing.JFrame {
 
         jTabbedPane3.addTab("Mượn Sách", jPanel9);
 
-        jTabbedPane2.addTab("Quản Lý Thành Viên", jTabbedPane3);
+        TabbedTotal.addTab("Quản Lý Thành Viên", jTabbedPane3);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -80,7 +85,7 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 772, Short.MAX_VALUE)
         );
 
-        jTabbedPane2.addTab("Quản Lý Thiết Bị", jPanel5);
+        TabbedTotal.addTab("Quản Lý Thiết Bị", jPanel5);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -93,7 +98,7 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 772, Short.MAX_VALUE)
         );
 
-        jTabbedPane2.addTab("Xử Lý Vi Phạm", jPanel6);
+        TabbedTotal.addTab("Xử Lý Vi Phạm", jPanel6);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -106,21 +111,42 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 772, Short.MAX_VALUE)
         );
 
-        jTabbedPane2.addTab("Thóng Kê", jPanel7);
+        TabbedTotal.addTab("Thóng Kê", jPanel7);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(TabbedTotal)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(TabbedTotal)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void TabbedTotalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TabbedTotalStateChanged
+        int selectedIndex = TabbedTotal.getSelectedIndex();
+        
+        // Dựa vào index của tab được chọn, hiển thị panel tương ứng
+        switch (selectedIndex) {
+            case 0:
+                
+                break;
+            case 1:
+                
+                break;
+            case 2:
+                TabbedTotal.setComponentAt(selectedIndex, new PanelViolation());
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_TabbedTotalStateChanged
 
     /**
      * @param args the command line arguments
@@ -158,12 +184,12 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane TabbedTotal;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
     // End of variables declaration//GEN-END:variables
 }
