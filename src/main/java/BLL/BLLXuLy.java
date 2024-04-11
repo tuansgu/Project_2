@@ -3,6 +3,7 @@ package BLL;
 import DAL.thanhvien;
 import DAL.xulyDAL;
 import DAL.xuly;
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.List;
 public class BLLXuLy {
@@ -30,5 +31,9 @@ public class BLLXuLy {
     public List<xuly> searchData(String key)
     {
         return xulyDAL.searchData(key);
+    }
+    public boolean importFromExcel(File file)
+    {
+        return xulyDAL.importFromExcel(file);
     }
 }

@@ -2,7 +2,9 @@ package GUI;
 
 import BLL.BLLXuLy;
 import DAL.xuly;
+import java.io.File;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -83,6 +85,11 @@ public class PanelViolation extends javax.swing.JPanel {
         });
 
         btnImport.setText("Import");
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Reload");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -171,6 +178,25 @@ public class PanelViolation extends javax.swing.JPanel {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         searchData();
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    // Gọi phương thức import từ tệp Excel ở đây
+                    if(xulyBLL.importFromExcel(selectedFile))
+                    {
+                        JOptionPane.showMessageDialog(null, "Import thành công!");    
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Import thất bại", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;  
+                    }
+                    
+                }
+    }//GEN-LAST:event_btnImportActionPerformed
     public void displayDataInTable() {
         List<xuly> listXuLy = xulyBLL.getAllXuLy();
 
@@ -230,6 +256,7 @@ public class PanelViolation extends javax.swing.JPanel {
             model.addRow(row);
         }
     }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
