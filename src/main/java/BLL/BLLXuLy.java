@@ -27,4 +27,8 @@ public class BLLXuLy {
     {
         return xulyDAL.insertViPham(maTV, selectedHinhThuc, soTien, ngayXL, trangthai);
     }
+    public List<xuly> searchData(String key)
+    {
+        return xulyDAL.searchData(key);
+    }
 }

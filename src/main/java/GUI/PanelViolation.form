@@ -145,17 +145,15 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
-                  <Component id="btnImport" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
                   <Component id="btnInsert" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                   <Component id="txtSearch" min="-2" pref="231" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnSearch" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                  <Component id="btnDeleteCondition" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                  <Component id="btnImport" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -168,7 +166,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnInsert" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="btnSearch" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="btnDeleteCondition" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="txtSearch" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="btnImport" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
@@ -192,11 +189,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="T&#xec;m Ki&#x1ebf;m"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnDeleteCondition">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="X&#xf3;a Theo &#x110;i&#x1ec1;u Ki&#x1ec7;n"/>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtSearch">
         </Component>

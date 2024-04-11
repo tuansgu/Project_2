@@ -1,11 +1,13 @@
 package DAL;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import java.util.List;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 public class xulyDAL {
 
@@ -89,5 +91,24 @@ public class xulyDAL {
         }
         return flag;
     }
+    public List<xuly> searchData(String key) {
+    List<xuly> resultList = new ArrayList<>();
+    Session session = null;
+    try {
+        session = sessionFactory.openSession();
+        // Sử dụng câu truy vấn HQL để tìm kiếm các bản ghi có chứa từ khóa trong cột nào đó
+        String hql = "FROM xuly WHERE MaTV LIKE :keyword";
+        Query<xuly> query = session.createQuery(hql, xuly.class);
+        query.setParameter("keyword", "%" + key + "%");
+        resultList = query.getResultList();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (session != null) {
+            session.close();
+        }
+    }
+    return resultList;
+}
 
 }

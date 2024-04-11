@@ -3,6 +3,7 @@ package GUI;
 import BLL.BLLXuLy;
 import DAL.xuly;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class PanelViolation extends javax.swing.JPanel {
@@ -31,7 +32,6 @@ public class PanelViolation extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         btnInsert = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
-        btnDeleteCondition = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         btnImport = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -76,8 +76,11 @@ public class PanelViolation extends javax.swing.JPanel {
         });
 
         btnSearch.setText("Tìm Kiếm");
-
-        btnDeleteCondition.setText("Xóa Theo Điều Kiện");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         btnImport.setText("Import");
 
@@ -93,17 +96,15 @@ public class PanelViolation extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(155, 155, 155)
-                .addComponent(btnImport)
-                .addGap(59, 59, 59)
+                .addGap(203, 203, 203)
                 .addComponent(btnInsert)
-                .addGap(37, 37, 37)
+                .addGap(59, 59, 59)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSearch)
-                .addGap(54, 54, 54)
-                .addComponent(btnDeleteCondition)
-                .addGap(32, 32, 32)
+                .addGap(61, 61, 61)
+                .addComponent(btnImport)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -114,7 +115,6 @@ public class PanelViolation extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleteCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -167,6 +167,10 @@ public class PanelViolation extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         loadDataInTable();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        searchData();
+    }//GEN-LAST:event_btnSearchActionPerformed
     public void displayDataInTable() {
         List<xuly> listXuLy = xulyBLL.getAllXuLy();
 
@@ -184,8 +188,8 @@ public class PanelViolation extends javax.swing.JPanel {
             model.addRow(row);
         }
     }
-    public void loadDataInTable()
-    {
+
+    public void loadDataInTable() {
         List<xuly> listXuLy = xulyBLL.getAllXuLy();
 
         DefaultTableModel model = (DefaultTableModel) tableXuLy.getModel();
@@ -202,10 +206,33 @@ public class PanelViolation extends javax.swing.JPanel {
             model.addRow(row);
         }
     }
-    
+
+    public void searchData() {
+        String inputSearch = txtSearch.getText();
+        if (inputSearch.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập giá trị cần tìm kiếm", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        List<xuly> searchResult = xulyBLL.searchData(inputSearch);
+
+        DefaultTableModel model = (DefaultTableModel) tableXuLy.getModel();
+        model.setRowCount(0); // Clear the table before adding new data
+
+        for (xuly xl : searchResult) {
+            Object[] row = {
+                xl.getMaXL(),
+                xl.getMaTV(),
+                xl.getHinhThucXL(),
+                xl.getSoTien(),
+                xl.getNgayXL(),
+                xl.getTrangThaiXL()
+            };
+            model.addRow(row);
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDeleteCondition;
     private javax.swing.JButton btnImport;
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnSearch;

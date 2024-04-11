@@ -8,7 +8,7 @@
         <property name="maTV" column="MaTV" type="int"/>
         <property name="hinhThucXL" column="HinhThucXL" type="string"/>
         <property name="soTien" column="SoTien" type="int"/>
-        <property name="ngayXL" column="NgayXL" type="date"/>
+        <property name="ngayXL" column="NgayXL" type="timestamp"/>
         <property name="trangThaiXL" column="TrangThaiXL" type="int"/>
     </class>
 

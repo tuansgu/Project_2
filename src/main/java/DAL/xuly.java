@@ -5,6 +5,7 @@
 package DAL;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,14 +40,14 @@ public class xuly implements Serializable {
     private int soTien;
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date ngayXL;
+    private Timestamp ngayXL;
 
     private int trangThaiXL;
 
     public xuly() {
     }
 
-    public xuly(int maXL, int maTV, String hinhThucXL, int soTien, Date ngayXL, int trangThaiXL) {
+    public xuly(int maXL, int maTV, String hinhThucXL, int soTien, Timestamp ngayXL, int trangThaiXL) {
         this.maXL = maXL;
         this.maTV = maTV;
         this.hinhThucXL = hinhThucXL;
@@ -87,11 +88,11 @@ public class xuly implements Serializable {
         this.soTien = soTien;
     }
 
-    public Date getNgayXL() {
+    public Timestamp getNgayXL() {
         return ngayXL;
     }
 
-    public void setNgayXL(Date ngayXL) {
+    public void setNgayXL(Timestamp ngayXL) {
         this.ngayXL = ngayXL;
     }
 
