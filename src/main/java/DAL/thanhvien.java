@@ -31,7 +31,7 @@ public class thanhvien implements Serializable {
     @Column(name = "Nganh")
     private String nganh;
     @Column(name = "SDT")
-    private int sdt;
+    private String sdt;
     @Column(name = "PassWord")
     private String password;
     @Column(name = "Email")
@@ -40,7 +40,7 @@ public class thanhvien implements Serializable {
     public thanhvien() {
     }
 
-    public thanhvien(int maTV, String hoTen, String khoa, String nganh, int sdt, String password, String email) {
+    public thanhvien(int maTV, String hoTen, String khoa, String nganh, String sdt, String password, String email) {
         this.maTV = maTV;
         this.hoTen = hoTen;
         this.khoa = khoa;
@@ -82,11 +82,11 @@ public class thanhvien implements Serializable {
         this.nganh = nganh;
     }
 
-    public int getSdt() {
+    public String getSdt() {
         return sdt;
     }
 
-    public void setSdt(int sdt) {
+    public void setSdt(String sdt) {
         this.sdt = sdt;
     }
 

@@ -145,14 +145,18 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="215" max="-2" attributes="0"/>
-                  <Component id="jButton4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                  <Component id="jTextField2" min="-2" pref="231" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Component id="jButton5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                  <Component id="jButton6" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
+                  <Component id="btnImport" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                  <Component id="btnInsert" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="txtSearch" min="-2" pref="231" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnSearch" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                  <Component id="btnDeleteCondition" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -162,10 +166,12 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="45" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton4" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="jButton5" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="jButton6" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="btnInsert" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="btnSearch" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="btnDeleteCondition" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="txtSearch" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="btnImport" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="jButton1" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               </Group>
@@ -173,22 +179,39 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton4">
+        <Component class="javax.swing.JButton" name="btnInsert">
           <Properties>
             <Property name="text" type="java.lang.String" value="Th&#xea;m M&#x1edb;i"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnInsertMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInsertActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton5">
+        <Component class="javax.swing.JButton" name="btnSearch">
           <Properties>
             <Property name="text" type="java.lang.String" value="T&#xec;m Ki&#x1ebf;m"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton6">
+        <Component class="javax.swing.JButton" name="btnDeleteCondition">
           <Properties>
             <Property name="text" type="java.lang.String" value="X&#xf3;a Theo &#x110;i&#x1ec1;u Ki&#x1ec7;n"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="txtSearch">
+        </Component>
+        <Component class="javax.swing.JButton" name="btnImport">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Import"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Reload"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

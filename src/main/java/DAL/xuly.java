@@ -38,7 +38,7 @@ public class xuly implements Serializable {
 
     private int soTien;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date ngayXL;
 
     private int trangThaiXL;
