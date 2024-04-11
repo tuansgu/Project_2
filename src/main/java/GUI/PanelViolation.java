@@ -5,13 +5,18 @@ import DAL.xuly;
 import java.io.File;
 import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class PanelViolation extends javax.swing.JPanel {
 
     private BLLXuLy xulyBLL;
     private DefaultTableModel tableModel;
+    JPopupMenu popupMenu = new JPopupMenu();
+    JMenuItem deleteMenuItem;
 
     /**
      * Creates new form GUIViolation
@@ -19,6 +24,9 @@ public class PanelViolation extends javax.swing.JPanel {
     public PanelViolation() {
         xulyBLL = new BLLXuLy();
         initComponents();
+        deleteMenuItem = new JMenuItem("Delete");
+        popupMenu.add(deleteMenuItem);
+        
         displayDataInTable();
 
     }
@@ -49,6 +57,11 @@ public class PanelViolation extends javax.swing.JPanel {
                 "Mã Xử Lý", "Mã Thành Viên", "Hình Thức Xử Lý", "Số Tiền(Nếu có)", "Ngày Xử Lý", "Trạng Thái"
             }
         ));
+        tableXuLy.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableXuLyMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableXuLy);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -165,6 +178,7 @@ public class PanelViolation extends javax.swing.JPanel {
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
         InsertViolationDlg insertDlg = new InsertViolationDlg(new javax.swing.JFrame(), true);
         insertDlg.setVisible(true);
+        loadDataInTable();
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnInsertMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInsertMouseClicked
@@ -197,6 +211,14 @@ public class PanelViolation extends javax.swing.JPanel {
                     
                 }
     }//GEN-LAST:event_btnImportActionPerformed
+
+    private void tableXuLyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableXuLyMouseClicked
+        if (SwingUtilities.isRightMouseButton(evt)) {
+            int row = tableXuLy.rowAtPoint(evt.getPoint());
+            tableXuLy.getSelectionModel().setSelectionInterval(row, row);
+            popupMenu.show(tableXuLy, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_tableXuLyMouseClicked
     public void displayDataInTable() {
         List<xuly> listXuLy = xulyBLL.getAllXuLy();
 
