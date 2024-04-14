@@ -4,6 +4,8 @@ import com.mysql.cj.result.Row;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -172,6 +174,85 @@ public class xulyDAL {
             e.printStackTrace();
         }
         return flag;
+    }
+
+    public boolean deleteXuLy(int maTV) {
+        boolean flag = false;
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Query<xuly> query = session.createQuery("DELETE FROM xuly WHERE maTV = :maTV");
+            query.setParameter("maTV", maTV);
+            int rowsAffected = query.executeUpdate();
+            tx.commit();
+            if (rowsAffected > 0) {
+                flag = true;
+            }
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return flag;
+    }
+
+    public int getMaTVByID(int maXL) {
+        int maTV = -1; // Giá trị mặc định nếu không tìm thấy
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            // Lấy đối tượng xử lý từ cơ sở dữ liệu
+            xuly xuly = session.get(xuly.class, maXL);
+            if (xuly != null) {
+                maTV = xuly.getMaTV();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return maTV;
+    }
+
+    public boolean updateXuLy(int maXL, int maTV, String selectedHinhThuc, int soTien, int trangthai) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            // Bắt đầu một giao dịch
+            transaction = session.beginTransaction();
+
+            // Lấy đối tượng XuLy từ cơ sở dữ liệu dựa trên maXL
+            xuly xuLy = session.get(xuly.class, maXL);
+            if (xuLy != null) {
+                // Cập nhật thông tin cho đối tượng XuLy
+                xuLy.setMaTV(maTV);
+                xuLy.setHinhThucXL(selectedHinhThuc);
+                xuLy.setSoTien(soTien);
+                xuLy.setTrangThaiXL(trangthai);
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                session.update(xuLy);
+
+                // Commit giao dịch
+                transaction.commit();
+                return true;
+            } else {
+                System.out.println("Không tìm thấy mã xử lý để cập nhật " + maXL);
+                return false;
+            }
+        } catch (Exception ex) {
+            if (transaction != null) {
+                // Rollback giao dịch nếu có lỗi xảy ra
+                transaction.rollback();
+            }
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }

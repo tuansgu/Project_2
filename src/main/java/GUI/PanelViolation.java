@@ -2,6 +2,8 @@ package GUI;
 
 import BLL.BLLXuLy;
 import DAL.xuly;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
 import javax.swing.JFileChooser;
@@ -10,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import static jdk.javadoc.internal.doclets.toolkit.util.DocPath.parent;
 
 public class PanelViolation extends javax.swing.JPanel {
 
@@ -17,6 +20,7 @@ public class PanelViolation extends javax.swing.JPanel {
     private DefaultTableModel tableModel;
     JPopupMenu popupMenu = new JPopupMenu();
     JMenuItem deleteMenuItem;
+    JMenuItem updateMenuItem;
 
     /**
      * Creates new form GUIViolation
@@ -25,9 +29,37 @@ public class PanelViolation extends javax.swing.JPanel {
         xulyBLL = new BLLXuLy();
         initComponents();
         deleteMenuItem = new JMenuItem("Delete");
+        updateMenuItem = new JMenuItem("Update");
         popupMenu.add(deleteMenuItem);
-        
+        popupMenu.add(updateMenuItem);
+
         displayDataInTable();
+        deleteMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tableXuLy.getSelectedRow();
+                if (selectedRow != -1) {
+                    int maTV = (int) tableXuLy.getValueAt(selectedRow, 1);
+                    if (xulyBLL.deleteXuLy(maTV)) {
+                        loadDataInTable();
+                        JOptionPane.showMessageDialog(null, "Xóa vi phạm thành công!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+        });
+        updateMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { // Sửa "actionPerfomed" thành "actionPerformed"
+                int selectedRow = tableXuLy.getSelectedRow();
+                if (selectedRow != -1) {
+                    int maXL = (int) tableXuLy.getValueAt(selectedRow, 0);
+                    int maTV = (int) tableXuLy.getValueAt(selectedRow, 1);
+                    String hinhthuc = (String) tableXuLy.getValueAt(selectedRow, 2); 
+                    int soTien = (int) tableXuLy.getValueAt(selectedRow, 3); 
+                    UpdateViolationDlg updateDlg = new UpdateViolationDlg(new javax.swing.JFrame(), true, maXL, maTV, hinhthuc, soTien);
+                    updateDlg.setVisible(true);
+                }
+                loadDataInTable();
+            }
+        });
 
     }
 
@@ -35,6 +67,7 @@ public class PanelViolation extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenu1 = new java.awt.PopupMenu();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableXuLy = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -45,6 +78,8 @@ public class PanelViolation extends javax.swing.JPanel {
         txtSearch = new javax.swing.JTextField();
         btnImport = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+
+        popupMenu1.setLabel("popupMenu1");
 
         tableXuLy.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -181,6 +216,7 @@ public class PanelViolation extends javax.swing.JPanel {
         loadDataInTable();
     }//GEN-LAST:event_btnInsertActionPerformed
 
+
     private void btnInsertMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInsertMouseClicked
 
     }//GEN-LAST:event_btnInsertMouseClicked
@@ -195,21 +231,18 @@ public class PanelViolation extends javax.swing.JPanel {
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-                int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    // Gọi phương thức import từ tệp Excel ở đây
-                    if(xulyBLL.importFromExcel(selectedFile))
-                    {
-                        JOptionPane.showMessageDialog(null, "Import thành công!");    
-                    }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(this, "Import thất bại", "Error", JOptionPane.ERROR_MESSAGE);
-                        return;  
-                    }
-                    
-                }
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            // Gọi phương thức import từ tệp Excel ở đây
+            if (xulyBLL.importFromExcel(selectedFile)) {
+                JOptionPane.showMessageDialog(null, "Import thành công!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Import thất bại", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+        }
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void tableXuLyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableXuLyMouseClicked
@@ -278,7 +311,6 @@ public class PanelViolation extends javax.swing.JPanel {
             model.addRow(row);
         }
     }
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -290,6 +322,7 @@ public class PanelViolation extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private java.awt.PopupMenu popupMenu1;
     private javax.swing.JTable tableXuLy;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables

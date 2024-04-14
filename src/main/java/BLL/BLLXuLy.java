@@ -36,4 +36,17 @@ public class BLLXuLy {
     {
         return xulyDAL.importFromExcel(file);
     }
+    public boolean deleteXuLy(int maTV)
+    {
+        return xulyDAL.deleteXuLy(maTV);
+    }
+    public int getMaTVByID(int maXL)
+    {
+        return xulyDAL.getMaTVByID(maXL);
+    }
+    public boolean updateXuLy(int maXL,int maTV, String selectedHinhThuc,int soTien, int trangthai)
+    {
+        return xulyDAL.updateXuLy(maXL, maTV, selectedHinhThuc, soTien, trangthai);
+    }
+
 }
