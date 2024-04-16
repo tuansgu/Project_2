@@ -44,9 +44,13 @@ public class BLLXuLy {
     {
         return xulyDAL.getMaTVByID(maXL);
     }
-    public boolean updateXuLy(int maXL,int maTV, String selectedHinhThuc,int soTien, int trangthai)
+    public boolean updateXuLy(int maXL, int maTV, String selectedHinhThuc, int soTien, int trangthai)
     {
         return xulyDAL.updateXuLy(maXL, maTV, selectedHinhThuc, soTien, trangthai);
+    }
+
+    public boolean updateXuLyTrangThai(int maXL, int maTV, String hinhThucXL, int soTien, int trangthai) {
+        return xulyDAL.updateXuLyTrangThai(maXL, maTV, hinhThucXL, soTien, trangthai);
     }
 
 }

@@ -223,22 +223,17 @@ public class xulyDAL {
     public boolean updateXuLy(int maXL, int maTV, String selectedHinhThuc, int soTien, int trangthai) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
-            // Bắt đầu một giao dịch
             transaction = session.beginTransaction();
 
-            // Lấy đối tượng XuLy từ cơ sở dữ liệu dựa trên maXL
             xuly xuLy = session.get(xuly.class, maXL);
             if (xuLy != null) {
-                // Cập nhật thông tin cho đối tượng XuLy
                 xuLy.setMaTV(maTV);
                 xuLy.setHinhThucXL(selectedHinhThuc);
                 xuLy.setSoTien(soTien);
                 xuLy.setTrangThaiXL(trangthai);
 
-                // Lưu thay đổi vào cơ sở dữ liệu
                 session.update(xuLy);
 
-                // Commit giao dịch
                 transaction.commit();
                 return true;
             } else {
@@ -247,7 +242,35 @@ public class xulyDAL {
             }
         } catch (Exception ex) {
             if (transaction != null) {
-                // Rollback giao dịch nếu có lỗi xảy ra
+                transaction.rollback();
+            }
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    public boolean updateXuLyTrangThai(int maXL, int maTV, String selectedHinhThuc, int soTien, int trangthai)
+    {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+
+            xuly xuLy = session.get(xuly.class, maXL);
+            if (xuLy != null) {
+                xuLy.setMaTV(maTV);
+                xuLy.setHinhThucXL(selectedHinhThuc);
+                xuLy.setSoTien(soTien);
+                xuLy.setTrangThaiXL(trangthai);
+
+                session.update(xuLy);
+
+                transaction.commit();
+                return true;
+            } else {
+                System.out.println("Không tìm thấy mã xử lý để cập nhật " + maXL);
+                return false;
+            }
+        } catch (Exception ex) {
+            if (transaction != null) {
                 transaction.rollback();
             }
             ex.printStackTrace();
