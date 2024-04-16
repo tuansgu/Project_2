@@ -176,14 +176,14 @@ public class xulyDAL {
         return flag;
     }
 
-    public boolean deleteXuLy(int maTV) {
+    public boolean deleteXuLy(int maXL) {
         boolean flag = false;
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query<xuly> query = session.createQuery("DELETE FROM xuly WHERE maTV = :maTV");
-            query.setParameter("maTV", maTV);
+            Query<xuly> query = session.createQuery("DELETE FROM xuly WHERE maXL = :maXL");
+            query.setParameter("maXL", maXL);
             int rowsAffected = query.executeUpdate();
             tx.commit();
             if (rowsAffected > 0) {

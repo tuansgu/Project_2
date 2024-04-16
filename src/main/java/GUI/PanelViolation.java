@@ -38,22 +38,25 @@ public class PanelViolation extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tableXuLy.getSelectedRow();
                 if (selectedRow != -1) {
-                    int maTV = (int) tableXuLy.getValueAt(selectedRow, 1);
-                    if (xulyBLL.deleteXuLy(maTV)) {
-                        loadDataInTable();
+                    int maXL = (int) tableXuLy.getValueAt(selectedRow, 0);
+                    if (xulyBLL.deleteXuLy(maXL)) {
                         JOptionPane.showMessageDialog(null, "Xóa vi phạm thành công!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        loadDataInTable();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Xóa vi phạm thất bại!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
         });
+
         updateMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { // Sửa "actionPerfomed" thành "actionPerformed"
                 int selectedRow = tableXuLy.getSelectedRow();
                 if (selectedRow != -1) {
                     int maXL = (int) tableXuLy.getValueAt(selectedRow, 0);
                     int maTV = (int) tableXuLy.getValueAt(selectedRow, 1);
-                    String hinhthuc = (String) tableXuLy.getValueAt(selectedRow, 2); 
-                    int soTien = (int) tableXuLy.getValueAt(selectedRow, 3); 
+                    String hinhthuc = (String) tableXuLy.getValueAt(selectedRow, 2);
+                    int soTien = (int) tableXuLy.getValueAt(selectedRow, 3);
                     UpdateViolationDlg updateDlg = new UpdateViolationDlg(new javax.swing.JFrame(), true, maXL, maTV, hinhthuc, soTien);
                     updateDlg.setVisible(true);
                 }
@@ -243,6 +246,7 @@ public class PanelViolation extends javax.swing.JPanel {
             }
 
         }
+        loadDataInTable();
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void tableXuLyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableXuLyMouseClicked
