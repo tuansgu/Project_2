@@ -140,7 +140,6 @@ public class UpdateViolationDlg extends java.awt.Dialog {
      */
     public void loadMaTV(int maTV) {
         String name = "";
-        int selectedMaTV = xulyBLL.getMaTVByID(maXL);
         String nameSelectedItem = xulyBLL.getThanhVienById(maTV);
         cmbMaTV.removeAllItems();
         cmbMaTV.addItem(String.valueOf(maTV) + " - " + nameSelectedItem);
@@ -194,18 +193,36 @@ public class UpdateViolationDlg extends java.awt.Dialog {
         String selectedHinhThuc = (String) cmbHinhThuc.getSelectedItem();
         // get soTien
         int soTien;
+<<<<<<< HEAD
         if (selectedHinhThuc.equals("Bồi thường") || selectedHinhThuc.equals("Khóa thẻ 1 tháng và bồi thường")) {
             String txtSoTienStr = txtSoTien.getText().trim();
+=======
+        int trangthai; // Đặt trạng thái ở đây
+        String txtSoTienStr = txtSoTien.getText().trim();
+        if (selectedHinhThuc.equals("Bồi thường")) {
+            trangthai = 0;
+>>>>>>> 66c1556ba1886e1a54df3268b8afad238054ce84
             if (txtSoTienStr.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập số tiền bồi thường", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 soTien = Integer.parseInt(txtSoTienStr);
             }
+        } else if (selectedHinhThuc.equals("Bồi thường và khóa thẻ 1 tháng")) {
+            trangthai = 1;
+            if (txtSoTienStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập số tiền bồi thường và khóa thẻ 1 tháng", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                soTien = Integer.parseInt(txtSoTienStr);
+            }
         } else {
-            soTien = 0; // Set default value for soTien
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn hình thức xử lý", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        int trangthai = selectedHinhThuc.equals("Bồi thường") ? 0 : 1;
+
+        // Loại bỏ dòng sau đây vì trangthai đã được gán trong các điều kiện trên
+        // trangthai = selectedHinhThuc.equals("Bồi thường") ? 0 : 1;
         if (xulyBLL.updateXuLy(maXL, maTV, selectedHinhThuc, soTien, trangthai)) {
             JOptionPane.showMessageDialog(null, "Sửa vi phạm thành công");
             setVisible(false);

@@ -151,7 +151,7 @@ public class InsertViolationDlg extends javax.swing.JDialog {
     private void cmbHinhThucItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbHinhThucItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             String selectedOption = (String) cmbHinhThuc.getSelectedItem();
-            if (selectedOption.equals("Bồi thường") || selectedOption.equals("Khóa thẻ 1 tháng và bồi thường")) {
+            if (selectedOption.equals("Bồi thường") || selectedOption.equals("Bồi thường và khóa thẻ 1 tháng")) {
                 txtSoTien.setText("");
                 txtSoTien.setEditable(true);
             } else {

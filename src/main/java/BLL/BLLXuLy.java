@@ -36,17 +36,21 @@ public class BLLXuLy {
     {
         return xulyDAL.importFromExcel(file);
     }
-    public boolean deleteXuLy(int maTV)
+    public boolean deleteXuLy(int maXL)
     {
-        return xulyDAL.deleteXuLy(maTV);
+        return xulyDAL.deleteXuLy(maXL);
     }
     public int getMaTVByID(int maXL)
     {
         return xulyDAL.getMaTVByID(maXL);
     }
-    public boolean updateXuLy(int maXL,int maTV, String selectedHinhThuc,int soTien, int trangthai)
+    public boolean updateXuLy(int maXL, int maTV, String selectedHinhThuc, int soTien, int trangthai)
     {
         return xulyDAL.updateXuLy(maXL, maTV, selectedHinhThuc, soTien, trangthai);
+    }
+
+    public boolean updateXuLyTrangThai(int maXL, int maTV, String hinhThucXL, int soTien, int trangthai) {
+        return xulyDAL.updateXuLyTrangThai(maXL, maTV, hinhThucXL, soTien, trangthai);
     }
 
 }

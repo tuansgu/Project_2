@@ -5,6 +5,10 @@ import DAL.xuly;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -38,28 +42,32 @@ public class PanelViolation extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tableXuLy.getSelectedRow();
                 if (selectedRow != -1) {
-                    int maTV = (int) tableXuLy.getValueAt(selectedRow, 1);
-                    if (xulyBLL.deleteXuLy(maTV)) {
-                        loadDataInTable();
+                    int maXL = (int) tableXuLy.getValueAt(selectedRow, 0);
+                    if (xulyBLL.deleteXuLy(maXL)) {
                         JOptionPane.showMessageDialog(null, "Xóa vi phạm thành công!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        loadDataInTable();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Xóa vi phạm thất bại!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
         });
+
         updateMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { // Sửa "actionPerfomed" thành "actionPerformed"
                 int selectedRow = tableXuLy.getSelectedRow();
                 if (selectedRow != -1) {
                     int maXL = (int) tableXuLy.getValueAt(selectedRow, 0);
                     int maTV = (int) tableXuLy.getValueAt(selectedRow, 1);
-                    String hinhthuc = (String) tableXuLy.getValueAt(selectedRow, 2); 
-                    int soTien = (int) tableXuLy.getValueAt(selectedRow, 3); 
+                    String hinhthuc = (String) tableXuLy.getValueAt(selectedRow, 2);
+                    int soTien = (int) tableXuLy.getValueAt(selectedRow, 3);
                     UpdateViolationDlg updateDlg = new UpdateViolationDlg(new javax.swing.JFrame(), true, maXL, maTV, hinhthuc, soTien);
                     updateDlg.setVisible(true);
                 }
                 loadDataInTable();
             }
         });
+        autoUpdateTrangThaiXuLy();
 
     }
 
@@ -71,13 +79,11 @@ public class PanelViolation extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableXuLy = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btnInsert = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
-        btnImport = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -102,17 +108,6 @@ public class PanelViolation extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("QUẢN LÝ XỬ LÝ VI PHẠM");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         btnInsert.setText("Thêm Mới");
         btnInsert.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -132,17 +127,10 @@ public class PanelViolation extends javax.swing.JPanel {
             }
         });
 
-        btnImport.setText("Import");
-        btnImport.addActionListener(new java.awt.event.ActionListener() {
+        btnReset.setText("Reload");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Reload");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnResetActionPerformed(evt);
             }
         });
 
@@ -153,14 +141,12 @@ public class PanelViolation extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(203, 203, 203)
                 .addComponent(btnInsert)
-                .addGap(59, 59, 59)
+                .addGap(77, 77, 77)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(30, 30, 30)
                 .addComponent(btnSearch)
-                .addGap(61, 61, 61)
-                .addComponent(btnImport)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGap(82, 82, 82)
+                .addComponent(btnReset)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -171,8 +157,7 @@ public class PanelViolation extends javax.swing.JPanel {
                     .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34))
         );
 
@@ -182,14 +167,9 @@ public class PanelViolation extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(923, 923, 923))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(314, 314, 314))))
+                .addContainerGap(321, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(314, 314, 314))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -199,14 +179,8 @@ public class PanelViolation extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(62, 62, 62)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -221,29 +195,48 @@ public class PanelViolation extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnInsertMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         loadDataInTable();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         searchData();
     }//GEN-LAST:event_btnSearchActionPerformed
+    private void autoUpdateTrangThaiXuLy() {
+        LocalDate currentDate = LocalDate.now(); // Lấy ngày hiện tại
 
-    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        int returnValue = fileChooser.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            // Gọi phương thức import từ tệp Excel ở đây
-            if (xulyBLL.importFromExcel(selectedFile)) {
-                JOptionPane.showMessageDialog(null, "Import thành công!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Import thất bại", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+        // Lấy danh sách các đối tượng xuly từ CSDL
+        List<xuly> listXuLy = xulyBLL.getAllXuLy(); // Sử dụng phương thức từ DAL
+
+        // Lặp qua từng đối tượng xuly trong danh sách
+        for (xuly xl : listXuLy) {
+            // Chuyển đổi Timestamp sang LocalDate
+            LocalDate xlDate = Instant.ofEpochMilli(xl.getNgayXL().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+
+            // Kiểm tra và cập nhật trạng thái xử lý tương ứng
+            if (xl.getHinhThucXL().equals("Khóa thẻ 1 tháng")) {
+                LocalDate expiryDate = xlDate.plusDays(30);
+                if (!expiryDate.isAfter(currentDate)) { // Kiểm tra ngày hết hạn không sau ngày hiện tại
+                    // Cập nhật trạng thái xử lý trực tiếp trong CSDL
+                    xulyBLL.updateXuLyTrangThai(xl.getMaXL(), xl.getMaTV(), xl.getHinhThucXL(), xl.getSoTien(), 0); // Trạng thái xử lý
+                }
+            } else if (xl.getHinhThucXL().equals("Bồi thường và khóa thẻ 1 tháng")) {
+                LocalDate expiryDate = xlDate.plusDays(30);
+                if (!expiryDate.isAfter(currentDate)) { // Kiểm tra ngày hết hạn không sau ngày hiện tại
+                    // Cập nhật trạng thái xử lý trực tiếp trong CSDL
+                    xulyBLL.updateXuLyTrangThai(xl.getMaXL(), xl.getMaTV(), xl.getHinhThucXL(), xl.getSoTien(), 0); // Trạng thái xử lý
+                }
+            } else if (xl.getHinhThucXL().equals("Khóa thẻ 2 tháng")) {
+                LocalDate expiryDate = xlDate.plusDays(60);
+                if (!expiryDate.isAfter(currentDate)) { // Kiểm tra ngày hết hạn không sau ngày hiện tại
+                    // Cập nhật trạng thái xử lý trực tiếp trong CSDL
+                    xulyBLL.updateXuLyTrangThai(xl.getMaXL(), xl.getMaTV(), xl.getHinhThucXL(), xl.getSoTien(), 0); // Trạng thái xử lý
+                }
             }
-
         }
-    }//GEN-LAST:event_btnImportActionPerformed
+        loadDataInTable();
+    }
+
 
     private void tableXuLyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableXuLyMouseClicked
         if (SwingUtilities.isRightMouseButton(evt)) {
@@ -314,12 +307,10 @@ public class PanelViolation extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnImport;
     private javax.swing.JButton btnInsert;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private java.awt.PopupMenu popupMenu1;
