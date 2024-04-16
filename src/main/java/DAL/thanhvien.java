@@ -21,7 +21,6 @@ import javax.persistence.Table;
 @Table(name = "thanhvien")
 public class thanhvien implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaTV")
     private int maTV;
     @Column(name = "HoTen")

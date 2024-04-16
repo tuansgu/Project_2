@@ -193,7 +193,7 @@ public class UpdateViolationDlg extends java.awt.Dialog {
         // Get Hinhthucxuly
         String selectedHinhThuc = (String) cmbHinhThuc.getSelectedItem();
         // get soTien
-        int soTien = 0;
+        int soTien;
         if (selectedHinhThuc.equals("Bồi thường") || selectedHinhThuc.equals("Khóa thẻ 1 tháng và bồi thường")) {
             String txtSoTienStr = txtSoTien.getText().trim();
             if (txtSoTienStr.isEmpty()) {

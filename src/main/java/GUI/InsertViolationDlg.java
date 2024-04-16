@@ -193,7 +193,7 @@ public class InsertViolationDlg extends javax.swing.JDialog {
         if (selectedHinhThuc.equals("Chọn hình thức xử lý")) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hình thức xử lý", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        } else if (selectedHinhThuc.equals("Bồi thường") || selectedHinhThuc.equals("Khóa thẻ 1 tháng và bồi thường")) {
+        } else if (selectedHinhThuc.equals("Bồi thường") || selectedHinhThuc.equals("Bồi thường và khoá thẻ 1 tháng")) {
             String txtSoTienStr = txtSoTien.getText().trim();
             if (txtSoTienStr.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập số tiền bồi thường", "Error", JOptionPane.ERROR_MESSAGE);
