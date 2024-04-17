@@ -4,17 +4,114 @@
  */
 package GUI;
 
+import BLL.BLLThongTinSD;
+import DAL.thongtinsd;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author pc
  */
 public class GUIBorrow extends javax.swing.JPanel {
 
-    /**
-     * Creates new form GUIBorrow
-     */
     public GUIBorrow() {
         initComponents();
+        displayDataInTable();
+        customTable();
+    }
+
+    public void customTable() {
+        TableActionEvent event = new TableActionEvent() {
+            // button trả thiết bị
+            @Override
+            public void onEdit(int row) {
+                try {
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                    int maTT = Integer.parseInt(model.getValueAt(row, 0).toString());
+                    int maTB = Integer.parseInt(model.getValueAt(row, 1).toString());
+                    int maTV = Integer.parseInt(model.getValueAt(row, 3).toString());
+                    Date ngayMuon = dateFormat.parse(model.getValueAt(row, 5).toString());
+
+                    thongtinsd ttsd = new thongtinsd();
+                    ttsd.setMaTT(maTT);
+                    ttsd.setMaTB(maTB);
+                    ttsd.setMaTV(maTV);
+                    ttsd.setTgMuon(ngayMuon);
+
+                    GUITraThietBi tbb = new GUITraThietBi(new javax.swing.JFrame(), true, ttsd);
+                    tbb.setVisible(true);
+                } catch (Exception e) {
+                    System.out.println("Dang o GUIBorrow");
+                    System.out.println(e);
+                }
+
+            }
+
+            // button xem chi tiết
+            @Override
+            public void onView(int row) {
+                try {
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                    int maTB = Integer.parseInt(model.getValueAt(row, 1).toString());
+                    int maTV = Integer.parseInt(model.getValueAt(row, 3).toString());
+                    Date ngayMuon = dateFormat.parse(model.getValueAt(row, 5).toString());
+
+                    thongtinsd ttsd = new thongtinsd();
+                    ttsd.setMaTB(maTB);
+                    ttsd.setMaTV(maTV);
+                    ttsd.setTgMuon(ngayMuon);
+
+                    XemChiTietDaMuonGUI xct = new XemChiTietDaMuonGUI(new javax.swing.JFrame(), true, ttsd);
+                    xct.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Loi o GUIBorrow");
+                }
+
+            }
+
+            @Override
+            public void onDelete(int row) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        };
+        jTable1.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender());
+        jTable1.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor(event));
+
+    }
+
+    public void displayDataInTable() {
+        System.out.println("Chay vo dday nes");
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+        try {
+            while (jTable1.getRowCount() > 0) {
+                tableModel.removeRow(0);
+            }
+            List<thongtinsd> list = BLLThongTinSD.layDanhSachThongTinSDTGMuon();
+            for (int i = 0; i < list.size(); i++) {
+                String tenTV = BLLThongTinSD.layTenThanhVien(list.get(i).getMaTV()).getHoTen();
+                String tenTB = BLLThongTinSD.layTenThietBi(list.get(i).getMaTB()).getTenTB();
+
+                tableModel.addRow(new Object[]{
+                    list.get(i).getMaTT(),
+                    list.get(i).getMaTB(),
+                    tenTB,
+                    list.get(i).getMaTV(),
+                    tenTV,
+                    list.get(i).getTgMuon()}
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -26,19 +123,152 @@ public class GUIBorrow extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        btnMuonThietBi = new javax.swing.JButton();
+        btnLichSu = new javax.swing.JButton();
+        btnSync = new javax.swing.JButton();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã thông tin", "Mã thiết bị", "Tên thiết bị", "Mã thành viên", "Người mượn", "Thời gian mượn", "Hành động"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setRowHeight(50);
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanel2.setBackground(new java.awt.Color(0, 204, 255));
+
+        jLabel1.setBackground(new java.awt.Color(102, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Danh sách thiết bị đang mượn");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        btnMuonThietBi.setBackground(new java.awt.Color(0, 153, 0));
+        btnMuonThietBi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnMuonThietBi.setForeground(new java.awt.Color(255, 255, 255));
+        btnMuonThietBi.setText("Mượn thiết bị");
+        btnMuonThietBi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMuonThietBiActionPerformed(evt);
+            }
+        });
+
+        btnLichSu.setBackground(new java.awt.Color(0, 0, 204));
+        btnLichSu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLichSu.setForeground(new java.awt.Color(255, 255, 255));
+        btnLichSu.setText("Lịch sử");
+        btnLichSu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLichSuActionPerformed(evt);
+            }
+        });
+
+        btnSync.setBackground(new java.awt.Color(204, 204, 204));
+        btnSync.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSync.setForeground(new java.awt.Color(0, 0, 0));
+        btnSync.setText("Sync");
+        btnSync.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSyncActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSync)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnMuonThietBi)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLichSu)
+                .addGap(9, 9, 9))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSync, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnMuonThietBi)
+                                .addComponent(btnLichSu)))))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLichSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuActionPerformed
+        GUILichSuMuonThietBi ls = new GUILichSuMuonThietBi(new javax.swing.JFrame(), true);
+        ls.setVisible(true);
+    }//GEN-LAST:event_btnLichSuActionPerformed
+
+    private void btnMuonThietBiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuonThietBiActionPerformed
+        GUIMuonThietBi muonThietBi = new GUIMuonThietBi(new javax.swing.JFrame(), true);
+        muonThietBi.setVisible(true);
+    }//GEN-LAST:event_btnMuonThietBiActionPerformed
+
+    private void btnSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSyncActionPerformed
+        displayDataInTable();
+    }//GEN-LAST:event_btnSyncActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLichSu;
+    private javax.swing.JButton btnMuonThietBi;
+    private javax.swing.JButton btnSync;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
 }
