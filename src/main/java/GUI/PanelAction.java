@@ -27,13 +27,6 @@ public class PanelAction extends javax.swing.JPanel {
                 event.onEdit(row);
             }
         });
-
-        btnXem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                event.onView(row);
-            }
-        });
     }
 
     /**
@@ -47,17 +40,12 @@ public class PanelAction extends javax.swing.JPanel {
 
         jButton1 = new javax.swing.JButton();
         btnTraThiebi = new javax.swing.JButton();
-        btnXem = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
         btnTraThiebi.setBackground(new java.awt.Color(255, 255, 0));
         btnTraThiebi.setForeground(new java.awt.Color(0, 0, 0));
         btnTraThiebi.setText("Trả");
-
-        btnXem.setBackground(new java.awt.Color(255, 0, 51));
-        btnXem.setForeground(new java.awt.Color(0, 0, 0));
-        btnXem.setText("Xem");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -66,17 +54,13 @@ public class PanelAction extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnTraThiebi, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnXem, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTraThiebi)
-                    .addComponent(btnXem))
+                .addComponent(btnTraThiebi)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -84,7 +68,6 @@ public class PanelAction extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTraThiebi;
-    private javax.swing.JButton btnXem;
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
