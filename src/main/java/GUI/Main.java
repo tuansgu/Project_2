@@ -15,6 +15,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+
     }
 
     /**
@@ -146,7 +147,7 @@ public class Main extends javax.swing.JFrame {
                 TabbedTotal.setComponentAt(selectedIndex, new PanelViolation());
                 break;
             case 3:
-                break;
+                TabbedTotal.setComponentAt(selectedIndex, new GUIDashboard());
             default:
                 break;
         }
@@ -186,7 +187,20 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
-
+//    public void ac(){
+//        SELECT
+//    DATE_FORMAT(thongtinsd.TGVao, '%Y-%m') AS ThoiGian,
+//    thanhvien.Khoa,
+//    thanhvien.Nganh,
+//    COUNT(thongtinsd.MaTV) AS SoLuongThanhVien
+//FROM
+//    thanhvien
+//INNER JOIN thongtinsd ON thanhvien.MaTV = thongtinsd.MaTV
+//GROUP BY
+//    DATE_FORMAT(thongtinsd.TGVao, '%Y-%m'), thanhvien.Khoa, thanhvien.Nganh
+//ORDER BY
+//    ThoiGian, thanhvien.Khoa, thanhvien.Nganh;
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane TabbedTotal;
     private javax.swing.JPanel jPanel5;

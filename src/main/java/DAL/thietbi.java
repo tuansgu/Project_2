@@ -38,6 +38,11 @@ public class thietbi implements Serializable {
         this.moTaTB = moTaTB;
     }
 
+     public thietbi(String tenTB, String moTaTB) {
+        this.tenTB = tenTB;
+        this.moTaTB = moTaTB;
+    }
+
     public int getMaTB() {
         return maTB;
     }
