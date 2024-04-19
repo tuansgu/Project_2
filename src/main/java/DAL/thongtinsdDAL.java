@@ -26,12 +26,6 @@ public class thongtinsdDAL {
     }
 
     public List<thongtinsd> layDanhSachThongTinSD() {
-//        try (Session session = sessionFactory.openSession()) {
-//            return session.createQuery("from thongtinsd", thongtinsd.class).list();
-//        } catch (Exception e) {
-//            System.out.println(e);
-//            return null;
-//        }
         try {
 
             List<thongtinsd> result = session.createQuery("from thongtinsd", thongtinsd.class).getResultList();
@@ -48,9 +42,14 @@ public class thongtinsdDAL {
 
     }
 
-    public List<thongtinsd> layDanhSachThongTinSDTGMuon() {
+    public List<thongtinsd> layDanhSachThongTinSDTGMuon(int maTV) {
         try {
-            List<thongtinsd> result = session.createQuery("from thongtinsd where TGTra = null and TGMuon != null", thongtinsd.class).getResultList();
+            session.beginTransaction();
+            String hql = "from thongtinsd where MaTV = :MaTV and TGTra = null and TGMuon > 0";
+            Query<thongtinsd> query = session.createQuery(hql, thongtinsd.class);
+            query.setParameter("MaTV", maTV);
+            List<thongtinsd> result = query.getResultList();
+            session.getTransaction().commit();
             return result;
         } catch (Exception e) {
             System.err.println(e);
@@ -117,7 +116,8 @@ public class thongtinsdDAL {
 
     public List<thietbi> layDanhSachThietBi() {
         try {
-            List<thietbi> result = session.createQuery("from thietbi", thietbi.class).getResultList();
+            List<thietbi> result = session.createQuery("FROM thietbi",
+                    thietbi.class).getResultList();
             return result;
         } catch (Exception e) {
             System.err.println(e);
@@ -127,6 +127,55 @@ public class thongtinsdDAL {
                 session.close();
             }
         }
+    }
+
+    public List<Integer> getMaThietBi() {
+        List<Integer> listThietBi = null;
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            String hqlQuery = "SELECT DISTINCT ttsd.MaTB FROM thongtinsd ttsd\n"
+                    + "WHERE ttsd.TGDatCho IS NULL AND ttsd.TGMuon IS NULL";
+            Query query = session.createQuery(hqlQuery);
+            listThietBi = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listThietBi;
+    }
+
+    public List<thongtinsd> getALLTTSD() {
+        try {
+            List<thongtinsd> result = session.createQuery("from thongtinsd where TGDatCho IS NULL AND TGMuon IS NULL", thongtinsd.class).getResultList();
+            return result;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public boolean checkThietBiDaMuon(int deviceCode) {
+        boolean isExisting = true;
+        try {
+            String hql = "SELECT COUNT(*) FROM thongtinsd WHERE MaTB = :MaTB and (TGDatCho IS NULL or TGMuon IS NULL)";
+            Query<Long> query = session.createQuery(hql, Long.class);
+//            query.setParameter("MaTV", memberCode);
+            query.setParameter("MaTB", deviceCode);
+
+            Long count = query.getSingleResult();
+            isExisting = (count > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return isExisting;
     }
 
     public int layMaThanhVien(int maTV) {
@@ -212,8 +261,28 @@ public class thongtinsdDAL {
         return isExisting;
     }
 
+    public boolean checkMemberStatus(int memberCode) {
+        boolean isProcessed = false;
+
+        try {
+            // Sử dụng HQL để kiểm tra trạng thái xử lý của mã thành viên
+            String hql = "SELECT COUNT(*) FROM xuly WHERE MaTV = :MaTV AND TrangThaiXL = 1";
+            Query<Long> query = session.createQuery(hql, Long.class);
+            query.setParameter("MaTV", memberCode);
+
+            Long count = query.uniqueResult();
+            isProcessed = (count > 0);
+            System.out.println(count);
+            System.out.println(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return !isProcessed;
+    }
+
     public boolean themThongTinSD(thongtinsd ttsd) {
-     
+
         if (thongtinsdDAL.getInstance().layThongTinSD(ttsd.getMaTT()) != null) {
             return false;
         }
@@ -254,136 +323,20 @@ public class thongtinsdDAL {
 
     }
 
-//    public thietbi layMaThietBi(String tenTB) {
-//        thietbi result = null;
-//        try {
-//            session.beginTransaction();
-//
-//            String hql = "FROM thietbi WHERE TenTB = :TenTB";
-//            Query query = session.createQuery(hql);
-//            query.setParameter("TenTB", tenTB);
-//
-//            thietbi tb = (thietbi) query.getResultList();
-//            if (tb != null) {
-//                result = new thietbi(tb.getMaTB(), tb.getTenTB(), tb.getMoTaTB());
-//            }
-//
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            System.err.println(e);
-//        } finally {
-//            if (session != null) {
-//                session.close();
-//            }
-//        }
-//
-//        return result;
-//    }
-//
-//    public int layTenThietBi(String tenTB) {
-//        int id = 0;
-//        try {
-//            thietbi tb = session.get(thietbi.class, tenTB);
-//            if (tb != null) {
-//                id = tb.getMaTB();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (session != null) {
-//                session.close();
-//            }
-//        }
-//        return id;
-//    }
-//    public int layIDThanhVienTheoTen(String hoTen) {
-//        int id = 0;
-//        try {
-//            thanhvien tv = session.get(thanhvien.class, hoTen);
-//            if (tv != null) {
-//                id = tv.getMaTV();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (session != null) {
-//                session.close();
-//            }
-//        }
-//        return id;
-//    }
-//    public thanhvien layTenThanhVien(String hoTen) {
-//        thanhvien result = null;
-//        try {
-//            session.beginTransaction();
-//
-//            String hql = "FROM thanhvien WHERE MaTV = :MaTV";
-//            Query query = session.createQuery(hql);
-//            query.setParameter("MaTV", hoTen);
-//
-//            thanhvien tv = (thanhvien) query.uniqueResult();
-//            if (tv != null) {
-//                result = new thanhvien(tv.getMaTV(), tv.getHoTen(), tv.getKhoa(), tv.getNganh(), tv.getSdt(), tv.getPassword(), tv.getEmail());
-//            }
-//
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            System.err.println(e);
-//        } finally {
-//            if (session != null) {
-//                session.close();
-//            }
-//        }
-//
-//        return result;
-//    }
-//    public thanhvien layThongTinThanhVien(String hoTen) {
-//        thanhvien tv = new thanhvien();
-//        try {
-//            tv = session.get(thanhvien.class, hoTen);
-//        } catch (HibernateException ex) {
-//            // Log the exception
-//            System.err.println(ex);
-//        } finally {
-//            session.close();
-//        }
-//        return tv;
-//    }
-//    public thanhvien getMaTV(String hoTen) {
-//        thanhvien result = null;
-//        try {
-//            session.beginTransaction();
-//
-//            String hql = "FROM thanhvien WHERE HoTen = :HoTen";
-//            Query<thanhvien> query = session.createQuery(hql, thanhvien.class);
-//            query.setParameter("HoTen", hoTen);
-//
-//            result = query.uniqueResult();
-//
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            System.err.println(e);
-//        }
-//
-//        return result;
-//    }
-//
-//    public thietbi getMaTB(String tenTB) {
-//        thietbi result = null;
-//        try {
-//            session.beginTransaction();
-//
-//            String hql = "FROM thietbi WHERE TenTB = :TenTB";
-//            Query<thietbi> query = session.createQuery(hql, thietbi.class);
-//            query.setParameter("TenTB", tenTB);
-//
-//            result = (thietbi) query.getResultList();
-//
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            System.err.println(e);
-//        }
-//
-//        return result;
-//    }
+    public String layMoTaThietBi(int maTB) {
+        String mota = "";
+        try {
+            thietbi tb = session.get(thietbi.class, maTB);
+            if (tb != null) {
+                mota = tb.getMoTaTB();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return mota;
+    }
 }
