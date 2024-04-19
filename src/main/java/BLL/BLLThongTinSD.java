@@ -20,8 +20,8 @@ public class BLLThongTinSD {
         return thongtinsdDAL.getInstance().layDanhSachThongTinSD();
     }
 
-    public static List<thongtinsd> layDanhSachThongTinSDTGMuon() {
-        return thongtinsdDAL.getInstance().layDanhSachThongTinSDTGMuon();
+    public static List<thongtinsd> layDanhSachThongTinSDTGMuon(int maTV) {
+        return thongtinsdDAL.getInstance().layDanhSachThongTinSDTGMuon(maTV);
     }
 
     public static thanhvien layTenThanhVien(int maTV) {
@@ -60,37 +60,23 @@ public class BLLThongTinSD {
         return thongtinsdDAL.getInstance().checkExistingData(memberCode, deviceCode);
     }
 
-//    public static boolean insert(int maTV, int maTB, Date tgVao, Date tgMuon, Date tgTra, Date tgDatCho) {
-//        return thongtinsdDAL.getInstance().insert(maTV, maTB, tgVao, tgMuon, tgTra, tgDatCho);
-//    }
-//    public static int layTenThietBi(String tenTB) {
-//        return thongtinsdDAL.getInstance().layTenThietBi(tenTB);
-//    }
-//    public static thietbi layMaThietBi(String tenTB) {
-//        return thongtinsdDAL.getInstance().layMaThietBi(tenTB);
-//    }
-//
-//    public static thanhvien layTenThanhVien(String hoTen) {
-//        return thongtinsdDAL.getInstance().layTenThanhVien(hoTen);
-//    }
-//
-//    public static int layIDThanhVienTheoTen(String hoTen) {
-//        return thongtinsdDAL.getInstance().layIDThanhVienTheoTen(hoTen);
-//    }
-//
-//    public static int layTenThietBi(String tenTB) {
-//        return thongtinsdDAL.getInstance().layTenThietBi(tenTB);
-//    }
-//
-//    public static thanhvien layThongTinThanhVien(String hoTen) {
-//        return thongtinsdDAL.getInstance().layThongTinThanhVien(hoTen);
-//    }
-//
-//    public static thanhvien getMaTV(String hoTen) {
-//        return thongtinsdDAL.getInstance().getMaTV(hoTen);
-//    }
-//
-//    public static thietbi getMaTB(String tenTB) {
-//        return thongtinsdDAL.getInstance().getMaTB(tenTB);
-//    }
+    public static boolean checkMemberStatus(int memberCode) {
+        return thongtinsdDAL.getInstance().checkMemberStatus(memberCode);
+    }
+
+    public static List<Integer> getMaThietBi() {
+        return thongtinsdDAL.getInstance().getMaThietBi();
+    }
+
+    public static List<thongtinsd> getALLTTSD() {
+        return thongtinsdDAL.getInstance().getALLTTSD();
+    }
+
+    public static String layMoTaThietBi(int maTB) {
+        return thongtinsdDAL.getInstance().layMoTaThietBi(maTB);
+    }
+
+    public static boolean checkThietBiDaMuon(int deviceCode) {
+        return thongtinsdDAL.getInstance().checkThietBiDaMuon(deviceCode);
+    }
 }
