@@ -30,25 +30,30 @@ public class thongtinsd implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaTT")
     private int maTT;
+
     @ManyToOne
     @JoinColumn(name = "maTV")
     private int maTV;
+
     @ManyToOne
     @JoinColumn(name = "maTB")
     private int maTB;
+
     @Column(name = "TGVao")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date tgVao;
+
     @Column(name = "TGMuon")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date tgMuon;
+
     @Column(name = "TGTra")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date tgTra;
+
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column (name = "TGDatCho")
+    @Column(name = "tgDatCho")
     private Date tgDatCho;
-    
 
     public thongtinsd() {
     }
@@ -62,8 +67,6 @@ public class thongtinsd implements Serializable {
         this.tgTra = tgTra;
         this.tgDatCho = tgDatCho;
     }
-
-    
 
     public int getMaTT() {
         return maTT;

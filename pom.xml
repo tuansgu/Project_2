@@ -56,16 +56,29 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.4.7.Final</version>
         </dependency>
+<<<<<<< HEAD
         <dependency>
+=======
+
+              <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE210</version>
+        </dependency>
+         <dependency>
+>>>>>>> ae06422e5bd290233d0c0f31699ce79aeeb80997
             <groupId>com.toedter</groupId>
             <artifactId>jcalendar</artifactId>
             <version>1.4</version>
         </dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>unknown.binary</groupId>
             <artifactId>AbsoluteLayout</artifactId>
             <version>SNAPSHOT</version>
         </dependency>
+=======
+>>>>>>> ae06422e5bd290233d0c0f31699ce79aeeb80997
     </dependencies>
     <name>QL_ThanhVien</name>
     <repositories>

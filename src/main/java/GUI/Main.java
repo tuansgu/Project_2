@@ -15,6 +15,8 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+         GUIBorrow guiBorrow = new GUIBorrow();
+        jTabbedPane3.addTab("Mượn thiết bị", guiBorrow);
     }
 
     /**
