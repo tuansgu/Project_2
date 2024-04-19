@@ -3,6 +3,7 @@ package BLL;
 import DAL.thanhvien;
 import DAL.xulyDAL;
 import DAL.xuly;
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.List;
 public class BLLXuLy {
@@ -31,4 +32,25 @@ public class BLLXuLy {
     {
         return xulyDAL.searchData(key);
     }
+    public boolean importFromExcel(File file)
+    {
+        return xulyDAL.importFromExcel(file);
+    }
+    public boolean deleteXuLy(int maXL)
+    {
+        return xulyDAL.deleteXuLy(maXL);
+    }
+    public int getMaTVByID(int maXL)
+    {
+        return xulyDAL.getMaTVByID(maXL);
+    }
+    public boolean updateXuLy(int maXL, int maTV, String selectedHinhThuc, int soTien, int trangthai)
+    {
+        return xulyDAL.updateXuLy(maXL, maTV, selectedHinhThuc, soTien, trangthai);
+    }
+
+    public boolean updateXuLyTrangThai(int maXL, int maTV, String hinhThucXL, int soTien, int trangthai) {
+        return xulyDAL.updateXuLyTrangThai(maXL, maTV, hinhThucXL, soTien, trangthai);
+    }
+
 }

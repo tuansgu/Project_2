@@ -70,7 +70,7 @@ public class InsertViolationDlg extends javax.swing.JDialog {
 
         jLabel3.setText("Hình Thức Xử Lý");
 
-        cmbHinhThuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn hình thức xử lý", "Khóa thẻ 1 tháng", "Khóa thẻ 2 tháng", "Khóa thẻ vĩnh viễn", "Bồi thường", "Khóa thẻ 1 tháng và bồi thường" }));
+        cmbHinhThuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn hình thức xử lý", "Khóa thẻ 1 tháng", "Khóa thẻ 2 tháng", "Khóa thẻ vĩnh viễn", "Bồi thường", "Bồi thường và khóa thẻ 1 tháng" }));
         cmbHinhThuc.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbHinhThucItemStateChanged(evt);
@@ -151,7 +151,7 @@ public class InsertViolationDlg extends javax.swing.JDialog {
     private void cmbHinhThucItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbHinhThucItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             String selectedOption = (String) cmbHinhThuc.getSelectedItem();
-            if (selectedOption.equals("Bồi thường") || selectedOption.equals("Khóa thẻ 1 tháng và bồi thường")) {
+            if (selectedOption.equals("Bồi thường") || selectedOption.equals("Bồi thường và khóa thẻ 1 tháng")) {
                 txtSoTien.setText("");
                 txtSoTien.setEditable(true);
             } else {
@@ -193,7 +193,7 @@ public class InsertViolationDlg extends javax.swing.JDialog {
         if (selectedHinhThuc.equals("Chọn hình thức xử lý")) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hình thức xử lý", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        } else if (selectedHinhThuc.equals("Bồi thường") || selectedHinhThuc.equals("Khóa thẻ 1 tháng và bồi thường")) {
+        } else if (selectedHinhThuc.equals("Bồi thường") || selectedHinhThuc.equals("Bồi thường và khoá thẻ 1 tháng")) {
             String txtSoTienStr = txtSoTien.getText().trim();
             if (txtSoTienStr.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập số tiền bồi thường", "Error", JOptionPane.ERROR_MESSAGE);
@@ -209,7 +209,7 @@ public class InsertViolationDlg extends javax.swing.JDialog {
         Timestamp ngayXL = new Timestamp(System.currentTimeMillis());
 
         // Get trangthaixuly
-        int trangthai = txtSoTien.getText().isEmpty() ? 1 : 0;
+        int trangthai = selectedHinhThuc.equals("Bồi thường") ? 0 : 1;
 
         if (xulyBLL.insertViPham(maTV, selectedHinhThuc, soTien, ngayXL, trangthai) == true) {
             JOptionPane.showMessageDialog(rootPane, "Thêm mới vi phạm thành công");
@@ -218,6 +218,7 @@ public class InsertViolationDlg extends javax.swing.JDialog {
             pn.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Thêm thất bại", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
     }
 

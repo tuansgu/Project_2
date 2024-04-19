@@ -27,8 +27,8 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         TabbedTotal = new javax.swing.JTabbedPane();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
-        jPanel8 = new javax.swing.JPanel();
+        tabbedMember = new javax.swing.JTabbedPane();
+        pnMember = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -44,20 +44,20 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jTabbedPane3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        tabbedMember.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnMemberLayout = new javax.swing.GroupLayout(pnMember);
+        pnMember.setLayout(pnMemberLayout);
+        pnMemberLayout.setHorizontalGroup(
+            pnMemberLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1067, Short.MAX_VALUE)
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnMemberLayout.setVerticalGroup(
+            pnMemberLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 737, Short.MAX_VALUE)
         );
 
-        jTabbedPane3.addTab("Thành Viên", jPanel8);
+        tabbedMember.addTab("Thành Viên", pnMember);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -70,9 +70,9 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 737, Short.MAX_VALUE)
         );
 
-        jTabbedPane3.addTab("Mượn Sách", jPanel9);
+        tabbedMember.addTab("Mượn Thiết Bị", jPanel9);
 
-        TabbedTotal.addTab("Quản Lý Thành Viên", jTabbedPane3);
+        TabbedTotal.addTab("Quản Lý Thành Viên", tabbedMember);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -133,7 +133,11 @@ public class Main extends javax.swing.JFrame {
         // Dựa vào index của tab được chọn, hiển thị panel tương ứng
         switch (selectedIndex) {
             case 0:
-                
+                int selectedIndexMember = tabbedMember.getSelectedIndex();
+                if(selectedIndexMember == 0)
+                {
+                    tabbedMember.setComponentAt(selectedIndexMember, new PanelMember());
+                }
                 break;
             case 1:
                 
@@ -201,8 +205,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JPanel pnMember;
+    private javax.swing.JTabbedPane tabbedMember;
     // End of variables declaration//GEN-END:variables
 }
