@@ -248,58 +248,58 @@ public class InsertMemberDlg extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void addMember() {
-    String stringMaTV = masv_textfield.getText();
-    String hoVaTen = hovaten_textfield.getText();
-    String khoa = khoa_textfield.getText();
-    String nganh = nganh_textfield.getText();
-    String sdt = sdt_textfield.getText();
-    String password = password_textfield.getText();
-    String email = email_textfield.getText();
+        String stringMaTV = masv_textfield.getText();
+        String hoVaTen = hovaten_textfield.getText();
+        String khoa = khoa_textfield.getText();
+        String nganh = nganh_textfield.getText();
+        String sdt = sdt_textfield.getText();
+        String password = password_textfield.getText();
+        String email = email_textfield.getText();
 
-    // Kiểm tra xem các trường nhập liệu có trống không
-    if (stringMaTV.isEmpty() || hoVaTen.isEmpty() || khoa.isEmpty() || nganh.isEmpty() ||
-            sdt.isEmpty() || password.isEmpty() || email.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin.", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Không thêm thành viên nếu có trường nhập liệu trống
-    }
-    
-    if (stringMaTV.length() != 10) {
-        JOptionPane.showMessageDialog(this, "Mã sinh viên phải có đúng 10 ký tự.", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Không thêm thành viên nếu mã sinh viên không đủ 10 ký tự
-    }
-    
-    int sdtValue = 0;
-    try {
-        sdtValue = Integer.parseInt(sdt);
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ: " + sdt, "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Không thêm thành viên nếu số điện thoại không hợp lệ
-    }
+        // Kiểm tra xem các trường nhập liệu có trống không
+        if (stringMaTV.isEmpty() || hoVaTen.isEmpty() || khoa.isEmpty() || nganh.isEmpty() ||
+                sdt.isEmpty() || password.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Không thêm thành viên nếu có trường nhập liệu trống
+        }
 
-    // Kiểm tra định dạng email
-    if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-        JOptionPane.showMessageDialog(this, "Định dạng email không hợp lệ.", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Không thêm thành viên nếu định dạng email không hợp lệ
-    }
-    
-    int MaTV = 0;
-    try {
-        MaTV = Integer.parseInt(stringMaTV);
-        System.out.println("Integer value: " + MaTV);
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Số thẻ thành viên không hợp lệ: " + stringMaTV, "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Không thêm thành viên nếu số thẻ không hợp lệ
-    }
+        if (stringMaTV.length() != 10) {
+            JOptionPane.showMessageDialog(this, "Mã sinh viên phải có đúng 10 ký tự.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Không thêm thành viên nếu mã sinh viên không đủ 10 ký tự
+        }
 
-    // Thêm thành viên vào cơ sở dữ liệu
-    if (thanhVienBLL.insertThanhVien(MaTV, hoVaTen, khoa, nganh, sdt, password, email)) {
-        JOptionPane.showMessageDialog(this, "Thêm mới thành viên thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
-        setVisible(false);
-        PanelMember pn = new PanelMember();
-        pn.setVisible(true);
-    } else {
-        JOptionPane.showMessageDialog(this, "Thêm thất bại", "Error", JOptionPane.ERROR_MESSAGE);
+        int sdtValue = 0;
+        try {
+            sdtValue = Integer.parseInt(sdt);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ: " + sdt, "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Không thêm thành viên nếu số điện thoại không hợp lệ
+        }
+
+        // Kiểm tra định dạng email
+        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(this, "Định dạng email không hợp lệ.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Không thêm thành viên nếu định dạng email không hợp lệ
+        }
+
+        int MaTV = 0;
+        try {
+            MaTV = Integer.parseInt(stringMaTV);
+            System.out.println("Integer value: " + MaTV);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Số thẻ thành viên không hợp lệ: " + stringMaTV, "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Không thêm thành viên nếu số thẻ không hợp lệ
+        }
+
+        // Thêm thành viên vào cơ sở dữ liệu
+        if (thanhVienBLL.insertThanhVien(MaTV, hoVaTen, khoa, nganh, sdt, password, email)) {
+            JOptionPane.showMessageDialog(this, "Thêm mới thành viên thành công", "Success", JOptionPane.INFORMATION_MESSAGE);
+            setVisible(false);
+            PanelMember pn = new PanelMember();
+            pn.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm thất bại", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-}
 
 }

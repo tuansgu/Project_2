@@ -22,7 +22,6 @@ import lombok.Data;
 public class thietbi implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaTB")
     private int maTB;
     @Column(name = "TenTB")

@@ -57,6 +57,7 @@ public class PanelMember extends javax.swing.JPanel {
                     }
                     if (thanhVienBLL.deleteThanhVien(maTV)) {
                         displayDataInTable();
+                        loadTriggerYearCombobox();
                         JOptionPane.showMessageDialog(null, "Xóa thành viên thành công!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Xóa thành viên thất bại!", "Fail", JOptionPane.INFORMATION_MESSAGE);
@@ -333,14 +334,12 @@ public class PanelMember extends javax.swing.JPanel {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    // Xử lý sự kiện khi một item được chọn
                     String selectedYear = (String) xoaNhieuCmb.getSelectedItem();
-                    // Hiển thị hộp thoại hỏi người dùng
                     int choice = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa không?", "Xác nhận xoá", JOptionPane.YES_NO_OPTION);
-                    // Nếu người dùng chọn YES (đồng ý), thực hiện việc xoá
+                    
                     if (choice == JOptionPane.YES_OPTION) {
                         boolean success = thanhVienBLL.deleteThanhVienByTriggerYear(selectedYear);
-                        // Hiển thị thông báo tương ứng
+                        
                         if (success) {
                             JOptionPane.showMessageDialog(null, "Xóa thành viên thành công!", "Success", JOptionPane.INFORMATION_MESSAGE);
                             loadTriggerYearCombobox();

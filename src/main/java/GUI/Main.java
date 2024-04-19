@@ -140,7 +140,7 @@ public class Main extends javax.swing.JFrame {
                 }
                 break;
             case 1:
-                
+                TabbedTotal.setComponentAt(selectedIndex, new PanelDevice());
                 break;
             case 2:
                 TabbedTotal.setComponentAt(selectedIndex, new PanelViolation());

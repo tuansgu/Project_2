@@ -151,7 +151,7 @@ public class UpdateViolationDlg extends java.awt.Dialog {
         }
         cmbMaTV.setSelectedIndex(0);
     }
-
+    
     public void loadHinhThuc(String hinhthuc) {
         cmbHinhThuc.removeAllItems();
 
@@ -179,7 +179,7 @@ public class UpdateViolationDlg extends java.awt.Dialog {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         updateData(maXL);
     }//GEN-LAST:event_btnUpdateActionPerformed
-    public void updateData(int maXL) {
+public void updateData(int maXL) {
         String selectedMaTV = (String) cmbMaTV.getSelectedItem();
         if (selectedMaTV == null || selectedMaTV.equals("Chọn mã thành viên")) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn mã thành viên", "Error", JOptionPane.ERROR_MESSAGE);
@@ -193,15 +193,10 @@ public class UpdateViolationDlg extends java.awt.Dialog {
         String selectedHinhThuc = (String) cmbHinhThuc.getSelectedItem();
         // get soTien
         int soTien;
-<<<<<<< HEAD
-        if (selectedHinhThuc.equals("Bồi thường") || selectedHinhThuc.equals("Khóa thẻ 1 tháng và bồi thường")) {
-            String txtSoTienStr = txtSoTien.getText().trim();
-=======
         int trangthai; // Đặt trạng thái ở đây
         String txtSoTienStr = txtSoTien.getText().trim();
         if (selectedHinhThuc.equals("Bồi thường")) {
             trangthai = 0;
->>>>>>> 66c1556ba1886e1a54df3268b8afad238054ce84
             if (txtSoTienStr.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập số tiền bồi thường", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -249,7 +244,6 @@ public class UpdateViolationDlg extends java.awt.Dialog {
             }
         });
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnUpdate;
