@@ -6,6 +6,7 @@ package GUI;
 
 import BLL.BLLThongTinSD;
 import DAL.thongtinsd;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -17,10 +18,10 @@ public class XemChiTietDaMuonGUI extends javax.swing.JDialog {
 
     public int maTV;
     public String hoTen;
-    public Date tgVao;
-    public Date tgMuon;
+    public Timestamp tgVao;
+    public Timestamp tgMuon;
     public thongtinsd ttsd = new thongtinsd();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public XemChiTietDaMuonGUI(java.awt.Frame parent, boolean modal, thongtinsd ttsd) {
         super(parent, modal);

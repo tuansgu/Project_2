@@ -21,11 +21,11 @@ public class GUITraThietBi extends javax.swing.JDialog {
 
     public int maTV;
     public String hoTen;
-    public Date tgVao;
-    public Date tgMuon;
-    public Date tgTra;
+    public Timestamp tgVao;
+    public Timestamp tgMuon;
+    public Timestamp tgTra;
     public thongtinsd ttsd = new thongtinsd();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
     public GUITraThietBi(java.awt.Frame parent, boolean modal, thongtinsd ttsd) {
@@ -54,7 +54,11 @@ public class GUITraThietBi extends javax.swing.JDialog {
                     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
                     int maTT = Integer.parseInt(model.getValueAt(row, 0).toString());
                     int maTB = Integer.parseInt(model.getValueAt(row, 1).toString());
-                    Date tgVao = dateFormat.parse(model.getValueAt(row, 5).toString());
+                    String dateString = model.getValueAt(row, 5).toString();
+                    Date date = dateFormat.parse(dateString);
+
+                    Timestamp tgVao = new Timestamp(date.getTime());
+//                    Date tgVao = dateFormat.parse(model.getValueAt(row, 5).toString());
                     update(maTT, maTB, tgVao);
                     model.removeRow(row);
                 } catch (Exception e) {
@@ -198,7 +202,7 @@ public class GUITraThietBi extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public void update(int maTT, int maTB, Date tgVao) {
+    public void update(int maTT, int maTB, Timestamp tgVao) {
         try {
             ttsd = new thongtinsd();
             ttsd.setMaTT(maTT);
@@ -209,7 +213,7 @@ public class GUITraThietBi extends javax.swing.JDialog {
             ttsd.setTgTra(tgTra);
             if (BLLThongTinSD.updateThongTinSD(ttsd)) {
                 JOptionPane.showMessageDialog(rootPane, "Cập nhật thành công");
-                
+
                 return;
             } else {
                 JOptionPane.showMessageDialog(this, "Cập nhật thất bại", "Error", JOptionPane.ERROR_MESSAGE);

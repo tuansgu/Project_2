@@ -25,10 +25,11 @@ public class GUIMuonThietBi extends javax.swing.JDialog {
 
     public int maTV;
     public String hoTen;
-    public Date tgVao;
-    public Date tgMuon;
+    public Timestamp tgVao;
+    public Timestamp tgMuon;
     public thongtinsd ttsd = new thongtinsd();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    Timestamp a = new Timestamp(System.currentTimeMillis());
 
     public GUIMuonThietBi(java.awt.Frame parent, boolean modal, thongtinsd ttsd) {
         super(parent, modal);
@@ -409,8 +410,8 @@ public class GUIMuonThietBi extends javax.swing.JDialog {
     public void addDataToDatabase() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int rowCount = model.getRowCount();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Timestamp ngayXL = new Timestamp(System.currentTimeMillis());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp ngayMuon = new Timestamp(System.currentTimeMillis());
         boolean isSuccess = true;
         try {
             if (jTable1.getRowCount() == 0) {
@@ -423,11 +424,15 @@ public class GUIMuonThietBi extends javax.swing.JDialog {
 
                         int maTV = Integer.parseInt(model.getValueAt(row, 0).toString());
                         int maTB = Integer.parseInt(model.getValueAt(row, 2).toString());
-                        Date tgVao = dateFormat.parse(model.getValueAt(row, 4).toString());
 
-                        Date tgMuon = ngayXL;
-                        Date tgTra = null;
-                        Date tgDatCho = null;
+                        String dateString = model.getValueAt(row, 4).toString();
+                        Date date = dateFormat.parse(dateString);
+
+                        Timestamp tgVao = new Timestamp(date.getTime());
+
+                        Timestamp tgMuon = ngayMuon;
+                        Timestamp tgTra = null;
+                        Timestamp tgDatCho = null;
 
                         thongtinsd ttsd = new thongtinsd();
                         String tenTV = BLLThongTinSD.layTenThanhVien(maTV).getHoTen();
@@ -457,11 +462,19 @@ public class GUIMuonThietBi extends javax.swing.JDialog {
                         // có đặt chỗ
                         int maTV = Integer.parseInt(model.getValueAt(row, 0).toString());
                         int maTB = Integer.parseInt(model.getValueAt(row, 2).toString());
-                        Date tgVao = dateFormat.parse(model.getValueAt(row, 4).toString());
-                        Date tgDatCho = dateFormat.parse(model.getValueAt(row, 5).toString());
 
-                        Date tgMuon = null;
-                        Date tgTra = null;
+                        String dateStringTgVao = model.getValueAt(row, 4).toString();
+                        String dateStringTgDatCho = model.getValueAt(row, 5).toString();
+                        Date dateTgVao = dateFormat.parse(dateStringTgVao);
+                        Date dateTgDatCho = dateFormat.parse(dateStringTgDatCho);
+
+                        Timestamp tgVao = new Timestamp(dateTgVao.getTime());
+                        Timestamp tgDatCho = new Timestamp(dateTgDatCho.getTime());
+
+//                        Date tgVao = dateFormat.parse(model.getValueAt(row, 4).toString());
+//                        Date tgDatCho = dateFormat.parse(model.getValueAt(row, 5).toString());
+                        Timestamp tgMuon = null;
+                        Timestamp tgTra = null;
 
                         thongtinsd ttsd = new thongtinsd();
                         String tenTV = BLLThongTinSD.layTenThanhVien(maTV).getHoTen();

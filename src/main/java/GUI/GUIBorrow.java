@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Timestamp;
 
 /**
  *
@@ -186,13 +187,15 @@ public class GUIBorrow extends javax.swing.JPanel {
     public void checkIn() {
         try {
             String input = jTextField1.getText();
-            String formattedDate = getFormattedDate();
+//            String formattedDate = getFormattedDate();
+            Timestamp tgVao = new Timestamp(System.currentTimeMillis());
 
             int maTV = Integer.parseInt(input);
-            Date tgVao = convertStringToDate(formattedDate);
+//            Timestamp tgVao = convertStringToDate(formattedDate);
             thongtinsd ttsd = new thongtinsd();
             ttsd.setMaTV(maTV);
             ttsd.setTgVao(tgVao);
+            
             XemChiTietDaMuonGUI xct = new XemChiTietDaMuonGUI(new javax.swing.JFrame(), true, ttsd);
             xct.setVisible(true);
         } catch (Exception e) {
@@ -243,7 +246,7 @@ public class GUIBorrow extends javax.swing.JPanel {
 
             boolean isProcessed = BLLThongTinSD.checkMemberStatus(changeInt);
             if (!isProcessed) {
-                JOptionPane.showMessageDialog(this, "Mã thành viên đang bị vi phạm", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Mã thành viên bị vi phạm hiện đang bị khóa", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             checkIn();
