@@ -41,24 +41,24 @@ public class thongtinsd implements Serializable {
 
     @Column(name = "TGVao")
     @Temporal(value = TemporalType.TIMESTAMP)
-    private Date tgVao;
+    private Timestamp tgVao;
 
     @Column(name = "TGMuon")
     @Temporal(value = TemporalType.TIMESTAMP)
-    private Date tgMuon;
+    private Timestamp tgMuon;
 
     @Column(name = "TGTra")
     @Temporal(value = TemporalType.TIMESTAMP)
-    private Date tgTra;
+    private Timestamp tgTra;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "tgDatCho")
-    private Date tgDatCho;
+    private Timestamp tgDatCho;
 
     public thongtinsd() {
     }
 
-    public thongtinsd(int maTT, int maTV, int maTB, Date tgVao, Date tgMuon, Date tgTra, Date tgDatCho) {
+    public thongtinsd(int maTT, int maTV, int maTB, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra, Timestamp tgDatCho) {
         this.maTT = maTT;
         this.maTV = maTV;
         this.maTB = maTB;
@@ -92,35 +92,35 @@ public class thongtinsd implements Serializable {
         this.maTB = maTB;
     }
 
-    public Date getTgVao() {
+    public Timestamp getTgVao() {
         return tgVao;
     }
 
-    public void setTgVao(Date tgVao) {
+    public void setTgVao(Timestamp tgVao) {
         this.tgVao = tgVao;
     }
 
-    public Date getTgMuon() {
+    public Timestamp getTgMuon() {
         return tgMuon;
     }
 
-    public void setTgMuon(Date tgMuon) {
+    public void setTgMuon(Timestamp tgMuon) {
         this.tgMuon = tgMuon;
     }
 
-    public Date getTgTra() {
+    public Timestamp getTgTra() {
         return tgTra;
     }
 
-    public void setTgTra(Date tgTra) {
+    public void setTgTra(Timestamp tgTra) {
         this.tgTra = tgTra;
     }
 
-    public Date getTgDatCho() {
+    public Timestamp getTgDatCho() {
         return tgDatCho;
     }
 
-    public void setTgDatCho(Date tgDatCho) {
+    public void setTgDatCho(Timestamp tgDatCho) {
         this.tgDatCho = tgDatCho;
     }
 
