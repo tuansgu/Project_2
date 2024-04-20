@@ -15,7 +15,8 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-
+         GUIBorrow guiBorrow = new GUIBorrow();
+        jTabbedPane3.addTab("Mượn thiết bị", guiBorrow);
     }
 
     /**
@@ -71,7 +72,7 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 737, Short.MAX_VALUE)
         );
 
-        tabbedMember.addTab("Mượn Thiết Bị", jPanel9);
+     
 
         TabbedTotal.addTab("Quản Lý Thành Viên", tabbedMember);
 
